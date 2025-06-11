@@ -66,48 +66,29 @@ form{
     border-radius: 20px;
 }
 
-/* .column{
+.column{
     float: left;
-    background-color: rgb(239, 235, 229);;
+    /* background-color: rgb(239, 235, 229);; */
+    width: 25%;
     border-radius: 20px;
-    padding: 10px;
-} */
-
-.img2{
-    width: 200px;
-    height: 250px;
-    border-radius: 20px;
+    padding: 10px 10px;
 }
 
 /* .row{
-    background-color: rgb(239, 235, 229);
-    border-radius: 20px;
+    /* background-color: rgb(239, 235, 229); */
+    /* border-radius: 20px; */
     
-} */
+/* } */ */
 
-.card{
+/* .card{
     float: left;
     background-color: rgb(239, 235, 229);;
-    padding: 10px; 
-}
-
-.card1{
-    float: left;
-    background-color: rgb(239, 235, 229);
-}
-
-
-/* .img3{ */
-    /* padding-top: 10px; */
-    /* border-radius: 20px;
-    height: 250px;
-    width: 200px;
-} */
-/* .card{
+    /* padding: 10px;  */
+/* } */ */
+.card{
     border-radius: 20px; 
-    background-color: rgb(239, 235, 229); */
-    /* border: rebeccapurple; */
-    /* padding: 10px; */
-    /* text-align: center; */
-    /* background-color: ; */
- /* }  */
+    background-color: blue;
+    border: rebeccapurple; 
+    /* padding:  */
+    text-align: center;
+ }  
