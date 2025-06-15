@@ -27,7 +27,7 @@ const returnMovies = (url) => {
             columnDiv.setAttribute('class', 'column')
             const img = document.createElement('img')
             img.setAttribute('class', 'img');
-            img.setAttribute('id', 'image');
+            // img.setAttribute('id', 'image');
 
             const title = document.createElement('h3')
             title.setAttribute('class', 'name');
