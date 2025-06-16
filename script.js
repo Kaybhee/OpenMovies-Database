@@ -1,5 +1,3 @@
-// import dotenv from 'dotenv';            
-// dotenv.config();
 import { API_LINK, IMG_PATH, SEARCH_LINK } from './const.js';
 // const API_LINK = process.env.API_LINK;
 // const IMG_PATH = process.env.IMG_PATH;
@@ -29,7 +27,7 @@ const returnMovies = (url) => {
             img.setAttribute('class', 'img');
             // img.setAttribute('id', 'image');
 
-            const title = document.createElement('h3')
+            const title = document.createElement('h5')
             title.setAttribute('class', 'name');
 // ;
             const center = document.createElement('center');
