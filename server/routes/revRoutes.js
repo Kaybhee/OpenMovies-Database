@@ -1,7 +1,7 @@
 import express from 'express';
 import { getReviews, createReview, updateReview, deleteReview } from '../controller/controller.js';
 
-reviewRouter = express.Router();
+const reviewRouter = express.Router();
 
 reviewRouter.get('/movie/:id', getReviews);
 reviewRouter.post('/new-review', createReview);

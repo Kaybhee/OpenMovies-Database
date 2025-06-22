@@ -2,18 +2,18 @@ import mongoose from 'mongoose';
 
 const reviewSchema = mongoose.Schema({
     movieId : {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
     },
     user : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : String,
         required : true
     },
     review : {
         type: String,
         required: true
     }
-}
+}, {timestamps: true}
 )
 const Review = mongoose.model('Review', reviewSchema)
 
