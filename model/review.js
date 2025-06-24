@@ -6,8 +6,8 @@ const reviewSchema = mongoose.Schema({
         required: true,
     },
     user : {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
     review : {
         type: String,
