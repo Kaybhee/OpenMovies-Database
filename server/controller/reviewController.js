@@ -53,10 +53,16 @@ export const createReview = async (req, res, next) => {
 export const updateReview = async (req, res, next) => {
     const { movieId } = req.params;
     try {
-        const updateReview = await Review.updateOne({_id: ObjectId(movieId)}, {$set: {user: req.body.user, review: req.body.review}})
-        if(!updateReview) {
-            return next(errHandling(404, "Review not found"))
+        const updateReview = await Review.findById(movieId);
+         if (!updateReview) {
+            return next(errHandling(400, "Please provide a movieID"))
         }
+        updateReview.movieId = req.body.movieId || updateReview.movieId;
+        updateReview.user = req.body.user || updateReview.user;
+        updateReview.review = req.body.review || updateReview.review;
+        await updateReview.save();
+
+        // updateOne({_id: ObjectId(movieId)}, {$set: {user: req.body.user, review: req.body.review}})
         return res.status(200).json({message: "Review Updated successfully", updateReview})
     } catch (err) {
         next(err)

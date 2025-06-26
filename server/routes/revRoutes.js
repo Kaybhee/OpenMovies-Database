@@ -6,9 +6,9 @@ const reviewRouter = express.Router();
 reviewRouter.get('/movies', getMovieReviews);
 reviewRouter.post('/new-review', createReview);
 // review ID
-reviewRouter.get('/:reviewId', getReviews);
-reviewRouter.put('/:reviewId', updateReview);
-reviewRouter.delete('/:id', deleteReview);
+reviewRouter.get('/:movieId', getReviews);
+reviewRouter.put('/:movieId', updateReview);
+reviewRouter.delete('/:movieId', deleteReview);
 
 export default reviewRouter;
 
