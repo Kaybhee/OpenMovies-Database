@@ -14,11 +14,11 @@ export const getMovieReviews = async(req, res, next) => {
 }
     
 
-export const getReviews = async (req, res) => {
+export const getReviews = async (req, res, next) => {
     try {
-        const { reviewId } = req.params;
-        // console.log(reviewId)
-        const rev = await Review.findById(reviewId);
+        const {movieId}  = req.params;
+        // console.log(movieId)
+        const rev = await Review.find({movieId: parseInt(movieId)});
         // console.log(rev)
             if (!rev) {
                 return next(errHandling(404, "Review not found"))
@@ -29,17 +29,20 @@ export const getReviews = async (req, res) => {
     }
 }
 
-export const createReview = async (req, res) => {
+export const createReview = async (req, res, next) => {
 
     try {
         // const mov = new Review(req.body)
-        const {movieId, user, review } = req.body;
+        let {movieId, user, review} = req.body;
+        movieId =parseInt(movieId);
         if (!movieId || !user || !review) {
             return next(errHandling(400, "Please provide all fields"))
         }
-        const newReview = new Review({movieId, user, review})
-        const savedReview = await newReview.save();
-
+        const savedReview = await Review.create({
+            movieId: movieId,
+            user: user,
+            review: review
+        })
         res.status(201).json({message: "Review created successfully", savedReview})
 
     } catch(error) {
@@ -47,10 +50,10 @@ export const createReview = async (req, res) => {
     }
 }
 
-export const updateReview = async (req, res) => {
-    const { reviewId } = req.params;
+export const updateReview = async (req, res, next) => {
+    const { movieId } = req.params;
     try {
-        const updateReview = await Review.updateOne({_id: ObjectId(reviewId)}, {$set: {user: req.body.user, review: req.body.review}})
+        const updateReview = await Review.updateOne({_id: ObjectId(movieId)}, {$set: {user: req.body.user, review: req.body.review}})
         if(!updateReview) {
             return next(errHandling(404, "Review not found"))
         }
@@ -61,10 +64,10 @@ export const updateReview = async (req, res) => {
 }
 
 
-export const deleteReview = async (req, res) => {
-    const { reviewId } = req.params;
+export const deleteReview = async (req, res, next) => {
+    const { movieId } = req.params;
     try {
-        const review = await Review.findByIdAndDelete(reviewId);
+        const review = await Review.findByIdAndDelete(movieId);
         if (!review) {
             console.error("Not found");
             return next(errHandling(404, "Review not found"))
