@@ -2,7 +2,6 @@ const API_LINK = 'http://localhost:5000/api/v1/reviews/';
 
 // Create a new review
 const url = new URL(location.href);
-console.log(location.href)
 const movieId=url.searchParams.get("id");
 const movieTitle=url.searchParams.get("title")
 console.log(movieId)
@@ -17,37 +16,21 @@ const div = document.createElement('div');
             <div class = "row">
             <div class ="column">
             <div class = "card">
-            New Review
+            <center><strong>New Review<strong><center>
             <p><strong>Review:</strong>
-            <input type="text" id="new-review" value=""</p>
+            <input class="rev" type="text" id="new-review" value=""</p>
             <p><strong>User: </strong>
-            <input type="text" id="new-user" value=""</p>
+            <input class= "rev" type="text" id="new-user" value=""</p>
             <div class = "actions">
-                <a href = '#' onclick="savedRev('new-review', 'new-user')">🕹️</a>
+                <a href = '#' onclick="savedRev('new-user', 'new-review') ">🕹️</a>
             </div>
             
             </div>
             </div>
             </div>
             `
+            main.appendChild(div)
 
-// const createRev = (userInputId, reviewInputId, id) => {
-//     const userInput = document.getElementById(userInputId)
-//     const reviewInput = document.getElementById(reviewInputId)
-//     fetch(API_LINK + id, {
-//         method: 'POST',
-//         headers: {
-//             "Accept": 'application/json, text/plain',
-//             "Content-type" :'application/json',
-//         },
-//         body: JSON.stringify({"user": user, "review": review, "movieId": movieId})
-//     })
-//     .then(res => res.json())
-//     .then(res => {
-//         console.log(res)
-//         location.reload()
-//     })
-// }
 //  function returning the movies
 // function to handle the movies functionality
 const returnReviews = (movieId) => {
@@ -88,10 +71,10 @@ const updateReview = (id, review, user) => {
     const reviewInputId = "review" + id;
 
     ele.innerHTML = `<p> <strong>Review: </strong>
-                            <input type=text id='${reviewInputId}' value='${review}' placeholder="Enter a review ID"> 
+                            <input type=text id='${reviewInputId}' value='${review}'> 
                     </p>
                     <p> <strong>User: </strong>
-                            <input type=text id='${userInputId}' value='${user}'placeholder="Enter a valid username"> 
+                            <input type=text id='${userInputId}' value='${user}'> 
                     </p>
     <p><a href= "#" onclick="savedRev('${userInputId}', '${reviewInputId}', '${id}')">🕹️</a>`
 };
@@ -110,9 +93,13 @@ const savedRev = (userInputId, reviewInputId, id="") => {
     })
     .then(res => res.json())
     .then(res => {
-        console.log(res)
+        // console.log(res)
+        if (res.message && res.message.includes("User already Exists")){
+            alert(res.message);
+            return;
+        }
         location.reload()
-    })
+    });
     } else {
        fetch(API_LINK + "new-review", {
         method: 'POST',
@@ -120,11 +107,16 @@ const savedRev = (userInputId, reviewInputId, id="") => {
             "Accept": 'application/json, text/plain',
             "Content-type" :'application/json',
         },
+        // console.log({ movieId, userInput, reviewInput})
         body: JSON.stringify({"user": userInput, "review": reviewInput, "movieId": movieId})
     })
     .then(res => res.json())
     .then(res => {
-        console.log(res)
+        if (res.message && res.message.includes("User already Exists")) {
+            alert(res.message);
+            return;
+        }
+        // console.log(res)
         location.reload()
     })
     } 

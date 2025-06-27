@@ -27,7 +27,7 @@ const returnMovies = (url) => {
             img.setAttribute('class', 'img');
             // img.setAttribute('id', 'image');
 
-            const title = document.createElement('h5')
+            const title = document.createElement('h6')
             title.setAttribute('class', 'name');
 // ;
             const center = document.createElement('center');
