@@ -10,7 +10,7 @@ dotenv.config();
 export const MONGODB_URI = process.env.MONGODB_URI
 
 
-const PORT = 5000;
+const PORT = 3000;
 // connecting to a database
 connectDB();
 
