@@ -1,9 +1,10 @@
 import { API_LINK, IMG_PATH, SEARCH_LINK } from '../const.js';
-// const API_LINK = process.env.API_LINK;
-// const IMG_PATH = process.env.IMG_PATH;
-// const SEARCH_LINK =process.env.SEARCH_LINK;
+// import dotenv from 'dotenv'
+// export const API_LINK = process.env.API_LINK;
+// export const IMG_PATH = process.env.IMG_PATH;
+// export const SEARCH_LINK =process.env.SEARCH_LINK;
 
-
+dotenv.config();
 const main = document.getElementById('section')
 const search = document.getElementById('mSearch');
 const form = document.getElementById('form');
