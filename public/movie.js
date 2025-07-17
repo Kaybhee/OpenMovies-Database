@@ -1,4 +1,4 @@
-const API_LINK = 'http://localhost:3000/api/v1/reviews/';
+const API_LINK = 'https://openmovies-database.onrender.com/api/v1/reviews/';
 
 // Create a new review
 const url = new URL(location.href);
