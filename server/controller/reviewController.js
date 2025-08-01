@@ -1,5 +1,6 @@
 import Review from '../../model/review.js'
 import errHandling from '../../middlewares/error/errHandling.js'
+import { createClient } from 'redis';
 
 export const getMovieReviews = async(req, res, next) => {
     try {
@@ -17,6 +18,8 @@ export const getMovieReviews = async(req, res, next) => {
 export const getReviews = async (req, res, next) => {
     try {
         const {movieId}  = req.params;
+        const cacheKey = `reviews:${movieId}`;
+
         // console.log(movieId)
         const rev = await Review.find({movieId: parseInt(movieId)});
         // console.log(rev)
