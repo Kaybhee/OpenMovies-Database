@@ -2,7 +2,7 @@ import Review from '../../model/review.js'
 import errHandling from '../../middlewares/error/errHandling.js'
 import { createClient } from 'redis';
 
-const redisClient = createClient()
+const redisClient = createClient({url: 'redis://localhost:6379'});
 redisClient.connect().catch(console.error);
 
 export const getMovieReviews = async(req, res, next) => {
