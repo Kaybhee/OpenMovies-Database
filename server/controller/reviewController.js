@@ -2,9 +2,12 @@ import Review from '../../model/review.js'
 import errHandling from '../../middlewares/error/errHandling.js'
 import { createClient } from 'redis';
 
+const redisClient = createClient()
+redisClient.connect().catch(console.error);
+
 export const getMovieReviews = async(req, res, next) => {
     try {
-        const reviews = await Review.find();
+        const reviews = await Review.find({isDelete: false});
         if (!reviews) {
             return next(errHandling(404, "No reviews found for this movie"))
         }
@@ -15,18 +18,23 @@ export const getMovieReviews = async(req, res, next) => {
 }
     
 
-export const getReviews = async (req, res, next) => {
+export const getReview = async (req, res, next) => {
     try {
         const {movieId}  = req.params;
         const cacheKey = `reviews:${movieId}`;
-
+        let cachedRev = await redisClient.get(cacheKey);
+        if (cachedRev) {
+            return res.status(200).json({message: "Reviews fetched successfully", reviews: JSON.parse(cachedRev)})
+        }
         // console.log(movieId)
-        const rev = await Review.find({movieId: parseInt(movieId)});
-        // console.log(rev)
-            if (!rev) {
+        const reviews = await Review.find({movieId: parseInt(movieId)});
+        if (!reviews) {
                 return next(errHandling(404, "Review not found"))
-            }
-            return res.status(200).json({message: "Reviews fetched successfully", rev})
+        }
+        await redisClient.set(cacheKey, JSON.stringify(reviews), {EX: 600})
+        // console.log(rev)
+            
+        return res.status(200).json({message: "Reviews fetched successfully", reviews})
     } catch (err) {
         next(err)
     }
@@ -50,6 +58,8 @@ export const createReview = async (req, res, next) => {
             user: user,
             review: review
         })
+
+        await redisClient.del(`reviews:${movieId}`)
         res.status(201).json({message: "Review created successfully", savedReview})
 
     } catch(err) {
@@ -70,6 +80,7 @@ export const updateReview = async (req, res, next) => {
         await updateReview.save();
 
         // updateOne({_id: ObjectId(movieId)}, {$set: {user: req.body.user, review: req.body.review}})
+        await redisClient.del(`reviews: ${updateReview.movieId}`)
         return res.status(200).json({message: "Review Updated successfully", updateReview})
     } catch (err) {
         next(err)
@@ -80,12 +91,14 @@ export const updateReview = async (req, res, next) => {
 export const deleteReview = async (req, res, next) => {
     const { movieId } = req.params;
     try {
-        const review = await Review.findByIdAndDelete(movieId);
+        const review = await Review.findById(movieId);
         if (!review) {
             console.error("Not found");
             return next(errHandling(404, "Review not found"))
         }
-        return res.status(200).json({messag: "Review deleted successfully", review})
+        await Review.updateOne({_id: movieId}, {$set: {isDelete: true}})
+        await redisClient.del(`reviews:${review.movieId}`);
+        return res.status(200).json({message: "Review deleted successfully", review})
     }catch (err) {
         next(err)
     }
