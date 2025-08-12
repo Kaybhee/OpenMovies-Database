@@ -40,7 +40,7 @@ app.use('/api/v1/reviews', reviewRouter);
 
 
 app.listen(PORT || MONGODB_URI, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server running at redis://localhost:${PORT}`);
 })
 
 
