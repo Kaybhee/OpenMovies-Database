@@ -17,7 +17,7 @@ dotenv.config();
 export const MONGODB_URI = process.env.MONGODB_URI
 
 
-const PORT = 6379;
+const PORT = 3000;
 // connecting to a database
 connectDB();
 
@@ -40,7 +40,7 @@ app.use('/api/v1/reviews', reviewRouter);
 
 
 app.listen(PORT || MONGODB_URI, () => {
-    console.log(`Server running at redis://localhost:${PORT}`);
+    console.log(`Server running at https://localhost:${PORT}`);
 })
 
 
