@@ -60,7 +60,7 @@ export const createReview = async (req, res, next) => {
         })
 
         await redisClient.del(`reviews:${movieId}`)
-        res.status(201).json({message: "Review created successfully", savedReview})
+        return res.status(201).json({message: "Review created successfully", savedReview})
 
     } catch(err) {
         next(err)
