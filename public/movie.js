@@ -32,7 +32,6 @@ const div = document.createElement('div');
             main.appendChild(div)
 
 
-returnReviews(movieId)
 //  function returning the movies
 // function to handle the movies functionality
 const returnReviews = (movieId) => {
@@ -139,4 +138,4 @@ window.delReview = delReview
 window.updateReview = updateReview
 window.savedRev = savedRev
 
-// returnReviews(movieId);
+returnReviews(movieId);
