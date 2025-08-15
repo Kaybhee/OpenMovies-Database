@@ -99,7 +99,10 @@ const savedRev = (userInputId, reviewInputId, id="") => {
             alert(res.message);
             return;
         }
-        location.reload()
+        // location.reload()
+        main.innerHTML= "";
+        main.appendChild(div);
+        returnReviews(movieId)
     });
     } else {
        fetch(API_LINK + "new-review", {
@@ -118,7 +121,10 @@ const savedRev = (userInputId, reviewInputId, id="") => {
             return;
         }
         // console.log(res)
-        location.reload()
+        // location.reload()
+        main.innerHTML = "";
+        main.appendChild(div);
+        returnReviews(movieId)
     })
     } 
 }
