@@ -87,7 +87,7 @@ const savedRev = (userInputId, reviewInputId, id="") => {
         method: 'PUT',
         headers: {
             "Accept": 'application/json, text/plain',
-            "Content-type" :'application/json',
+            "Content-Type" :'application/json',
         },
         body: JSON.stringify({"user": userInput, "review": reviewInput})
     })
