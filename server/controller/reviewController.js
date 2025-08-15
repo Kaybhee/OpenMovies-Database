@@ -47,9 +47,9 @@ export const createReview = async (req, res, next) => {
         let {movieId, user, review} = req.body;
         movieId =parseInt(movieId);
         const existingUser = await Review.findOne({movieId, user})
-        if (existingUser) {
-            return next(errHandling(400, "User already Exists"))
-        }
+        // if (existingUser) {
+        //     return next(errHandling(400, "User already Exists"))
+        // }
         if (!movieId || !user || !review) {
             return next(errHandling(400, "Please provide all fields"))
         }
