@@ -105,7 +105,7 @@ const savedRev = (userInputId, reviewInputId, id="") => {
         method: 'POST',
         headers: {
             "Accept": 'application/json, text/plain',
-            "Content-type" :'application/json',
+            "Content-Type" :'application/json',
         },
         // console.log({ movieId, userInput, reviewInput})
         body: JSON.stringify({"user": userInput, "review": reviewInput, "movieId": movieId})
