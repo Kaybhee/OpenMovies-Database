@@ -132,7 +132,9 @@ const savedRev = (userInputId, reviewInputId, id="") => {
         main.appendChild(div);
         returnReviews(movieId)
     })
-    .catch (() => alert("Failed to create review"))
+    .catch (err => {
+        alert("Failed to create review" + err.message)
+    })      
     } 
 }
     
