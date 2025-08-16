@@ -103,7 +103,8 @@ const savedRev = (userInputId, reviewInputId, id="") => {
         main.innerHTML= "";
         main.appendChild(div);
         returnReviews(movieId)
-    });
+    })
+    .catch (() => alert("Failed to update review"));
     } else {
        fetch(API_LINK + "new-review", {
         method: 'POST',
@@ -126,6 +127,7 @@ const savedRev = (userInputId, reviewInputId, id="") => {
         main.appendChild(div);
         returnReviews(movieId)
     })
+    .catch (() => alert("Failed to create review"))
     } 
 }
     
