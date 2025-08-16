@@ -29,7 +29,7 @@ const div = document.createElement('div');
             </div>
             </div>
             `
-            main.appendChild(div)
+            main.appendChild(div);
 
 
 //  function returning the movies
