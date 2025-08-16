@@ -115,7 +115,12 @@ const savedRev = (userInputId, reviewInputId, id="") => {
         // console.log({ movieId, userInput, reviewInput})
         body: JSON.stringify({"user": userInput, "review": reviewInput, "movieId": movieId})
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            return res.text().then(text => {throw new Error(text)})
+        }
+    return res.json()
+})
     .then(res => {
         if (res.message && res.message.includes("User already Exists")) {
             alert(res.message);
