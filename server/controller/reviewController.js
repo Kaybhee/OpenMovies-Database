@@ -3,15 +3,15 @@ import errHandling from '../../middlewares/error/errHandling.js'
 import { createClient } from 'redis';
 
 const redisClient = createClient({url: process.env.REDIS_URL});
-redisClient.connect().catch(console.error);
+redisClient.connect()
 
 export const getMovieReviews = async(req, res, next) => {
     try {
-        const reviews = await Review.find({isDelete: false});
-        if (!reviews) {
+        const rev = await Review.find({isDelete: false});
+        if (!rev) {
             return next(errHandling(404, "No reviews found for this movie"))
         }
-        res.status(200).json(reviews)
+        res.status(200).json({message: "Reviews fetched successfully", rev})
     } catch (err) {
         next(err)
     }
@@ -24,7 +24,7 @@ export const getReview = async (req, res, next) => {
         const cacheKey = `reviews:${movieId}`;
         let cachedRev = await redisClient.get(cacheKey);
         if (cachedRev) {
-            return res.status(200).json({message: "Reviews fetched successfully", reviews: JSON.parse(cachedRev)})
+            return res.status(200).json({message: "Reviews fetched successfully", rev: JSON.parse(cachedRev)})
         }
         // console.log(movieId)
         const reviews = await Review.find({movieId: parseInt(movieId)});
@@ -34,7 +34,9 @@ export const getReview = async (req, res, next) => {
         await redisClient.set(cacheKey, JSON.stringify(reviews), {EX: 600})
         // console.log(rev)
             
-        return res.status(200).json({message: "Reviews fetched successfully", reviews})
+        // return res.status(200).json({message: "Reviews fetched successfully", rev: reviews})
+                return res.status(200).json({message: "Reviews fetched successfully", rev: reviews})
+
     } catch (err) {
         next(err)
     }
@@ -53,18 +55,18 @@ export const createReview = async (req, res, next) => {
         if (!movieId || !user || !review) {
             return next(errHandling(400, "Please provide all fields"))
         }
-        const savedReview = await Review.create({
+        const rev = await Review.create({
             movieId: movieId,
             user: user,
             review: review
         })
 
         await redisClient.del(`reviews:${movieId}`)
-        return res.status(201).json({message: "Review created successfully", savedReview})
+        return res.status(201).json({message: "Review created successfully", rev})
 
     } 
     catch(err) {
-        // next(err)
+        next(err)
     }
 }
 
