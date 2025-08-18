@@ -38,9 +38,11 @@ const returnReviews = (movieId) => {
     fetch(`${API_LINK}${movieId}`)
     .then(res => res.json())
     .then((data) => {
-        if (Array.isArray(data.rev)) {
+        console.log(data)
+        if (Array.isArray(data.reviews)) {
             console.log("our data:", data)
-            data.rev.forEach(rev => {
+            // consle.log(data.reviews)
+            data.reviews.forEach(rev => {
             const cardDiv = document.createElement('div');
             cardDiv.innerHTML = `
             <div class = "row">
@@ -99,13 +101,14 @@ const savedRev = (userInputId, reviewInputId, id="") => {
             alert(res.message);
             return;
         }
-        // location.reload()
-        main.innerHTML= "";
-        main.appendChild(div);
+        location.reload()
+        // main.innerHTML= "";
+        // main.appendChild(div);
         returnReviews(movieId)
     })
     .catch (() => alert("Failed to update review"));
     } else {
+        console.log({ movieId, userInput, reviewInput})
        fetch(API_LINK + "new-review", {
         method: 'POST',
         headers: {
@@ -115,19 +118,20 @@ const savedRev = (userInputId, reviewInputId, id="") => {
         // console.log({ movieId, userInput, reviewInput})
         body: JSON.stringify({"user": userInput, "review": reviewInput, "movieId": movieId})
     })
-    .then(res => {
-        if (!res.ok) {
-            return res.text().then(text => {throw new Error(text)})
-        }
-    return res.json()
-})
+//     .then(res => {
+//         if (!res.ok) {
+//                       return res.text().then(text => {throw new Error(text)})
+//         }
+//     return res.json()
+// })
     .then(res => {
         if (res.message && res.message.includes("User already Exists")) {
-            alert(res.message);
+            alert("User already exist", res.message);
             return;
         }
         // console.log(res)
         // location.reload()
+        returnReviews(movieId);
         main.innerHTML = "";
         main.appendChild(div);
         returnReviews(movieId)
