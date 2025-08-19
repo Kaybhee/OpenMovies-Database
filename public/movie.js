@@ -39,10 +39,10 @@ const returnReviews = (movieId) => {
     .then(res => res.json())
     .then((data) => {
         console.log(data)
-        if (Array.isArray(data.reviews)) {
+        if (Array.isArray(data.rev)) {
             console.log("our data:", data)
             // consle.log(data.reviews)
-            data.reviews.forEach(rev => {
+            data.rev.forEach(rev => {
             const cardDiv = document.createElement('div');
             cardDiv.innerHTML = `
             <div class = "row">
