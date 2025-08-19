@@ -1,8 +1,4 @@
-// import { API_LINK, IMG_PATH, SEARCH_LINK } from '../const.js';
-// import dotenv from 'dotenv'
-// export const API_LINK = process.env.API_LINK;
-// export const IMG_PATH = process.env.IMG_PATH;
-// export const SEARCH_LINK =process.env.SEARCH_LINK;
+
 
 const API_LINK="https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=ee28a28f616411fbd3b3fbc0bd47fdbe&page=1";
 
