@@ -40,7 +40,7 @@ app.use('/api/v1/reviews', reviewRouter);
 
 
 app.listen(process.env.PORT || MONGODB_URI, () => {
-    console.log(`Server running at https://localhost:${process.env.PORT}`);
+    console.log(`Server running at http://localhost:${process.env.PORT}`);
 })
 
 
